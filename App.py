@@ -7,20 +7,20 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, relationship
 import uvicorn
 
-# Database setup
-SQLALCHEMY_DATABASE_URL = "sqlite:///./wallet_system.db"
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+# MySQL Database setup
+MYSQL_DATABASE_URL = "mysql+pymysql://root:124578@localhost/WalletDB"
+engine = create_engine(MYSQL_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# Database Models
+# Database 
 class User(Base):
     __tablename__ = "users"
     
     user_id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    email = Column(String, unique=True, index=True, nullable=False)
-    phone = Column(String, nullable=False)
+    name = Column(String(100), nullable=False)
+    email = Column(String(100), unique=True, index=True, nullable=False)
+    phone = Column(String(20), nullable=False)
     wallet_balance = Column(Float, default=0.0)
     
     transactions = relationship("Transaction", back_populates="user")
@@ -31,15 +31,15 @@ class Transaction(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
     amount = Column(Float, nullable=False)
-    transaction_type = Column(String, nullable=False)
+    transaction_type = Column(String(10), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     
     user = relationship("User", back_populates="transactions")
 
-# Create tables
+# Creating tables
 Base.metadata.create_all(bind=engine)
 
-# Pydantic Models
+# Models
 class UserResponse(BaseModel):
     name: str
     email: str
@@ -63,14 +63,12 @@ class TransactionResponse(BaseModel):
     class Config:
         from_attributes = True
 
-# FastAPI App
 app = FastAPI(
     title="Wallet Management System",
     description="Backend Development Assignment - AMRR TechSols",
     version="1.0.0"
 )
 
-# Dependency
 def get_db():
     db = SessionLocal()
     try:
@@ -85,9 +83,9 @@ def create_sample_data():
     try:
         if db.query(User).first() is None:
             users = [
-                User(name="John Doe", email="john@example.com", phone="1234567890", wallet_balance=1000.0),
-                User(name="Jane Smith", email="jane@example.com", phone="9876543210", wallet_balance=500.0),
-                User(name="Mike Johnson", email="mike@example.com", phone="5555555555", wallet_balance=250.0)
+                User(name="Ansh Gupta", email="ansh@example.com", phone="1234567890", wallet_balance=1000.0),
+                User(name="Mahesh", email="mahesh@example.com", phone="9003922210", wallet_balance=500.0),
+                User(name="Parth", email="parth@example.com", phone="5799005435", wallet_balance=250.0)
             ]
             for user in users:
                 db.add(user)
