@@ -26,9 +26,9 @@ This API lets you:
 ## Test data
 
 When you start the app, it creates 3 test users:
-- John Doe (john@example.com) - $1000 balance
-- Jane Smith (jane@example.com) - $500 balance  
-- Mike Wilson (mike@example.com) - $750 balance
+- Ansh Gupta (ansh@example.com) - $1000 balance
+- Mahesh (mahesh@example.com) - $500 balance  
+- Parth (parth@example.com) - $750 balance
 
 ## Files
 - App.py - The main code file
