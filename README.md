@@ -26,9 +26,10 @@ This API lets you:
 ## Test data
 
 When you start the app, it creates 3 test users:
-- Ansh Gupta (ansh@example.com) - $1000 balance
-- Mahesh (mahesh@example.com) - $500 balance  
-- Parth (parth@example.com) - $750 balance
+- Name - E-mail - Balance 
+- Ansh Gupta - ansh@example.com - 1000
+- Mahesh - mahesh@example.com - 500 
+- Parth - parth@example.com - 750 
 
 ## Files
 - App.py - The main code file
